@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Matrices)
 
+# Copy the datafile to the binary directory
+file(COPY ${PROJECT_SOURCE_DIR}/data DESTINATION ${CMAKE_BINARY_DIR})
+
 # Flags
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)

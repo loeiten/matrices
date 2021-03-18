@@ -45,11 +45,8 @@
 
 # Custom
 *delme*
-data/
-GCC_4_7_0/
 .DS_Store
 my.suppressions
-min.cxx
 build/
 .vscode/settings.json
 .vscode/c_cpp_properties.json

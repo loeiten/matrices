@@ -1,8 +1,18 @@
 #include <iostream>
+#include <string>
 
-#include "matrix/matrix.hxx"
-
+#include "matrix/vector_matrix.hxx"
 using std::cout;
-using std::endl;
+using std::string;
 
-int main() { return 0; }
+int main() {
+  // NOTE: The file is relative to the binary
+  // NOTE: We are copying the data directory to the build directory
+  string file_name{"data/1.txt"};
+
+  VectorMatrix<int> vm(file_name);
+  // VectorMatrix vm(file_name);
+  vm.Print(cout);
+
+  return 0;
+}
