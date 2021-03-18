@@ -88,3 +88,7 @@ ostream& VectorMatrix<T>::Print(ostream& os) const {
   }
   return os;
 }
+
+// NOTE: Must declare the templates a place where the compiler can find them
+//       https://stackoverflow.com/questions/495021/why-can-templates-only-be-implemented-in-the-header-file
+template class VectorMatrix<int>;

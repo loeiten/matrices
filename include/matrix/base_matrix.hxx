@@ -1,10 +1,12 @@
 #ifndef INCLUDE_MATRIX_BASE_MATRIX_HXX_
 #define INCLUDE_MATRIX_BASE_MATRIX_HXX_
 
+#include <cstddef>
 #include <ostream>
 #include <string>
 
 using std::ostream;
+using std::size_t;
 using std::string;
 
 /**
