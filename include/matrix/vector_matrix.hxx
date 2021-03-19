@@ -16,6 +16,9 @@ using std::vector;
  */
 template <class T>
 class VectorMatrix : public BaseMatrix<T> {
+  template <typename U>  // NOTE: Without this we get linker problems
+  friend bool operator==(const VectorMatrix<U>&, const VectorMatrix<U>&);
+
  public:
   // https://stackoverflow.com/questions/6592512/templates-parent-class-member-variables-not-visible-in-inherited-class
   using BaseMatrix<T>::cols;
@@ -33,13 +36,6 @@ class VectorMatrix : public BaseMatrix<T> {
   explicit VectorMatrix(const string& file_path);
 
   /**
-   * Read the matrix from a file
-   *
-   * \param file_path The path to the file
-   */
-  void Read(const string& file_path) override;
-
-  /**
    * Print the matrix
    *
    * \param os The ostream to print to
@@ -55,7 +51,24 @@ class VectorMatrix : public BaseMatrix<T> {
   // void Write(const string& file_path) const override;
 
  private:
-  vector<vector<T>> data;
+  vector<vector<T>> data; /**< The data containing the matrix */
+  /**
+   * Fill the data
+   *
+   * NOTE: This function will not close the file stream
+   *
+   * \param in_file The filestream used to filling the matrx
+   */
+  void FillData(ifstream& in_file) override;
 };
+
+/**
+ * Equality operator
+ *
+ * \param lhs The left hand side operand
+ * \param rhs The right hand side operand
+ */
+template <class T>
+bool operator==(const VectorMatrix<T>& lhs, const VectorMatrix<T>& rhs);
 
 #endif  // INCLUDE_MATRIX_VECTOR_MATRIX_HXX_

@@ -2,9 +2,11 @@
 #define INCLUDE_MATRIX_BASE_MATRIX_HXX_
 
 #include <cstddef>
+#include <fstream>
 #include <ostream>
 #include <string>
 
+using std::ifstream;
 using std::ostream;
 using std::size_t;
 using std::string;
@@ -25,7 +27,7 @@ class BaseMatrix {
    *
    * \param file_path The path to the file
    */
-  virtual void Read(const string& file_path) = 0;
+  void Read(const string& file_path);
 
   /**
    * Print the matrix
@@ -45,6 +47,16 @@ class BaseMatrix {
  protected:
   size_t rows; /**< Number of rows in the matrix */
   size_t cols; /**< Number of columns in the matrix */
+
+ private:
+  /**
+   * Fill the data
+   *
+   * NOTE: This function will not close the file stream
+   *
+   * \param in_file The filestream used to filling the matrx
+   */
+  virtual void FillData(ifstream& in_file) = 0;
 };
 
 #endif  // INCLUDE_MATRIX_BASE_MATRIX_HXX_

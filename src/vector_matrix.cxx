@@ -15,7 +15,6 @@ using std::getline;
 using std::ifstream;
 using std::istreambuf_iterator;
 using std::istringstream;
-using std::ofstream;
 using std::ostringstream;
 using std::runtime_error;
 using std::string;
@@ -24,36 +23,12 @@ using std::vector;
 
 template <class T>
 VectorMatrix<T>::VectorMatrix(const string& file_path) {
-  Read(file_path);
+  this->Read(file_path);
 }
 
 template <class T>
-void VectorMatrix<T>::Read(const string& file_path) {
-  ifstream in_file(file_path);
-
-  if (!in_file.is_open()) {
-    stringstream ss{"Could not open \""};
-    ss << file_path << "\"" << endl;
-    throw runtime_error(ss.str());
-  }
-
-  // Find size of matrix
-  cols = 0;
+void VectorMatrix<T>::FillData(ifstream& in_file) {
   string line;
-  string tmp;
-  // Get the first line
-  getline(in_file, line);
-  stringstream iss(line);
-  while (iss >> tmp) {
-    ++cols;
-  }
-
-  rows = static_cast<size_t>(count(istreambuf_iterator<char>(in_file),
-                                   istreambuf_iterator<char>(), '\n'));
-
-  // Reset file to start
-  in_file.clear();
-  in_file.seekg(0);
 
   vector<T> row;
   while (getline(in_file, line)) {
@@ -66,8 +41,6 @@ void VectorMatrix<T>::Read(const string& file_path) {
     // Remember to remove the contents of the row
     row.clear();
   }
-
-  in_file.close();
 }
 
 template <class T>
@@ -89,6 +62,14 @@ ostream& VectorMatrix<T>::Print(ostream& os) const {
   return os;
 }
 
+template <class T>
+bool operator==(const VectorMatrix<T>& lhs, const VectorMatrix<T>& rhs) {
+  // FIXME: YOU ARE HERE: CHECK THAT THE DIMENSIONS FIT BEFORE CHECKING ELEMENTS
+
+  return true;
+}
+
 // NOTE: Must declare the templates a place where the compiler can find them
 //       https://stackoverflow.com/questions/495021/why-can-templates-only-be-implemented-in-the-header-file
 template class VectorMatrix<int>;
+template class VectorMatrix<double>;
