@@ -20,7 +20,7 @@ class BaseMatrix {
   /**
    * Default constructor
    */
-  BaseMatrix() {}
+  BaseMatrix() = default;
 
   /**
    * Read the matrix from a file
@@ -42,7 +42,7 @@ class BaseMatrix {
    *
    * \param file_path The path to the file
    */
-  // virtual void Write(const string& file_path) const;
+  virtual void Write(const string& file_path) const = 0;
 
  protected:
   size_t rows; /**< Number of rows in the matrix */

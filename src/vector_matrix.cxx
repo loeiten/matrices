@@ -1,6 +1,7 @@
 #include "matrix/vector_matrix.hxx"
 
 #include <algorithm>
+#include <cstddef>
 #include <exception>
 #include <fstream>
 #include <iostream>
@@ -15,8 +16,10 @@ using std::getline;
 using std::ifstream;
 using std::istreambuf_iterator;
 using std::istringstream;
+using std::ofstream;
 using std::ostringstream;
 using std::runtime_error;
+using std::size_t;
 using std::string;
 using std::stringstream;
 using std::vector;
@@ -24,23 +27,6 @@ using std::vector;
 template <class T>
 VectorMatrix<T>::VectorMatrix(const string& file_path) {
   this->Read(file_path);
-}
-
-template <class T>
-void VectorMatrix<T>::FillData(ifstream& in_file) {
-  string line;
-
-  vector<T> row;
-  while (getline(in_file, line)) {
-    istringstream line_stream(line);
-    T number;
-    while (line_stream >> number) {
-      row.push_back(number);
-    }
-    data.push_back(row);
-    // Remember to remove the contents of the row
-    row.clear();
-  }
 }
 
 template <class T>
@@ -63,10 +49,33 @@ ostream& VectorMatrix<T>::Print(ostream& os) const {
 }
 
 template <class T>
-bool operator==(const VectorMatrix<T>& lhs, const VectorMatrix<T>& rhs) {
-  // FIXME: YOU ARE HERE: CHECK THAT THE DIMENSIONS FIT BEFORE CHECKING ELEMENTS
+void VectorMatrix<T>::Write(const string& file_path) const {
+  ofstream output;
+  output.open(file_path);
+  Print(output);
+  output.close();
+}
 
-  return true;
+template <class T>
+vector<vector<T>> VectorMatrix<T>::GetDataCopy() const {
+  return data;
+}
+
+template <class T>
+void VectorMatrix<T>::FillData(ifstream& in_file) {
+  string line;
+
+  vector<T> row;
+  while (getline(in_file, line)) {
+    istringstream line_stream(line);
+    T number;
+    while (line_stream >> number) {
+      row.push_back(number);
+    }
+    data.push_back(row);
+    // Remember to remove the contents of the row
+    row.clear();
+  }
 }
 
 // NOTE: Must declare the templates a place where the compiler can find them

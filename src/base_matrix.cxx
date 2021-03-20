@@ -39,6 +39,9 @@ void BaseMatrix<T>::Read(const string& file_path) {
     ++cols;
   }
 
+  // Reset file to start
+  in_file.clear();
+  in_file.seekg(0);
   rows = static_cast<size_t>(count(istreambuf_iterator<char>(in_file),
                                    istreambuf_iterator<char>(), '\n'));
 
